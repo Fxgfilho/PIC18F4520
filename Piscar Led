@@ -1,0 +1,22 @@
+// Aluno: Fábio Xavier Guedes Filho
+// Professor: Raphaell Maciel de Sousa
+// Data: 13/06/2022
+// Disciplina: Sistemas Embarcados I
+// Programa: Este programa tem como objetivo fazer um LEd, conectado em RD0, piscar
+// em um intervalo de tempo definido
+
+void main() {
+
+     //LED
+     TRISD.RD0 = 0; // Configurado como saída
+     PORTD.RD0 = 0; // Garante que o LED inicia desativado
+     
+     while(1)
+     {
+      PORTD.RD0 = 1;
+      Delay_ms(400);
+      PORTD.RD0 = 0;
+      Delay_ms(400);
+     }
+     
+}
