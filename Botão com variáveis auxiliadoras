@@ -1,0 +1,55 @@
+// Aluno: Fábio Xavier Guedes Filho
+// Professor: Raphaell Maciel de Sousa
+// Data: 20/06/2022
+// Disciplina: Sistemas Embarcados I
+// Programa: Este programa tem como objetivo acionar um Led em RD0
+// por meio de um botão conectado em RB0
+
+// RD0 -> LED
+// RB0 -> Botão
+
+#define LED PORTD.RD0
+#define button PORTB.RB0
+
+int buttonState = 1; // Botão não ativado
+int lastButtonState = 1; // Botão não ativado
+int ledStatus;
+
+void main() 
+{
+    // Diretivas de pré-compilação
+     
+    #ifdef P18F45K22
+          ANSELB = 0;  // Configura toos os pinos do PORTB como digitais
+          ANSELD = 0;  // Configura toos os pinos do PORTD como digitais
+    #else
+          ADCON1 |= 0X0F; // Configura todos os pinos ADC como digitais. Ex.:PIC18F4520
+    #endif
+   
+    // Tecla
+    TRISB.RB0 = 1; // Configura o pino RB0 como entrada
+    
+    // Led
+    TRISD.RD0 = 0; // Configura o pino RD0 como saída
+    LED = 0; // Led off
+    
+    Delay_ms(100);
+    
+    while(1)
+    {
+       buttonState = button; // Armazenando o estado do botão
+    
+       if(buttonState != lastButtonState) // 0 pois quando eu aciono o botão o nível lógico é baixo
+       {
+           ledStatus = !ledStatus;
+       }
+       else
+       {
+           ledStatus = ledStatus;
+       }
+       
+       LED = ledStatus;
+       lastButtonState = buttonState;
+    }
+    
+}
