@@ -31,7 +31,7 @@ void main()
     {
        if(PORTB.RB0 == 0) // 0 pois quando eu aciono o botão o nível lógico é baixo
        {
-           PORTD.RD0 = -LATD.RD0; // Toogle (inverte o estado lógico do LED)
+           PORTD.RD0 = ~LATD.RD0; // Toogle (inverte o estado lógico do LED)
            Delay_ms(300);
        }
     }
