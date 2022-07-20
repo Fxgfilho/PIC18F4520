@@ -1,0 +1,57 @@
+// Aluno: Fábio Xavier Guedes Filho
+// Professor: Raphaell Maciel de Sousa
+// Data: 20/07/2022
+// Disciplina: Sistemas Embarcados I
+// Programa: Este programa tem como objetivo acionar um display
+// de 7 segmentos
+
+// RD0 -> Segmento A do display de 7 segmentos
+// RA2 -> Pino de controle do display 1
+
+#define LED PORTD.RD0
+#define button PORTB.RB0
+
+int buttonState = 1; // Botão não ativado
+int lastButtonState = 1; // Botão não ativado
+int ledStatus;
+
+void main()
+{
+    // Diretivas de pré-compilação
+
+    #ifdef P18F45K22
+          ANSELB = 0;  // Configura toos os pinos do PORTB como digitais
+          ANSELD = 0;  // Configura toos os pinos do PORTD como digitais
+    #else
+          ADCON1 |= 0X0F; // Configura todos os pinos ADC como digitais. Ex.:PIC18F4520
+    #endif
+
+    // Segmento a do display 1
+    TRISD = 0; // Configura o pino RD0 como saída
+    TRISA.RA2 = 0; // Condigura o pino RA0 como saída
+    TRISA.RA3 = 0;
+    TRISA.RA4 = 0;
+    TRISA.RA5 = 0;
+    
+    PORTD = 0; // Pino em nível lógico baixo
+    PORTA.RA2 = 1; // Pino em nível lógico baixo
+    PORTA.RA3 = 1;
+    PORTA.RA4 = 1;
+    PORTA.RA5 = 1;
+    
+    Delay_ms(100);
+
+    while(1)
+    {
+       PORTD.RD1 = 1;
+       PORTA.RA2 = 1;
+       PORTA.RA3 = 0;
+       Delay_ms(100); // Delay de 400ms
+       
+       PORTD.RD1 = 1;
+       PORTA.RA2 = 0;
+       PORTA.RA3 = 1;
+       Delay_ms(100); // Delay de 400ms
+    }
+
+}
